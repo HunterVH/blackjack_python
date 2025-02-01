@@ -8,6 +8,7 @@ import random
 class deck:
     # This is the initial creation of the deck 52 objects of the card class
     def __init__(self, size):
+        ACEVALUE = 11
         self.cards = []
         self.size = size
         for j in range(52*self.size):
@@ -17,7 +18,7 @@ class deck:
                 case 0:
                     match value:
                         case 1:
-                            self.cards.append(card.card('A♥','Hearts', 11))
+                            self.cards.append(card.card('A♥','Hearts', ACEVALUE))
                             pass
                         case 11:
                             self.cards.append(card.card('J♥', 'Hearts', 10))
@@ -31,7 +32,7 @@ class deck:
                 case 1:
                     match value:
                         case 1:
-                            self.cards.append(card.card('A♦','Diamonds', 11))
+                            self.cards.append(card.card('A♦','Diamonds', ACEVALUE))
                         case 11:
                             self.cards.append(card.card('J♦', 'Diamonds', 10))
                         case 12:
@@ -43,7 +44,7 @@ class deck:
                 case 2:
                     match value:
                         case 1:
-                            self.cards.append(card.card('A♣','Clubs', 11))
+                            self.cards.append(card.card('A♣','Clubs', ACEVALUE))
                         case 11:
                             self.cards.append(card.card('J♣', 'Clubs', 10))
                         case 12:
@@ -55,7 +56,7 @@ class deck:
                 case 3:
                     match value:
                         case 1:
-                            self.cards.append(card.card('A♠','Spades', 11))
+                            self.cards.append(card.card('A♠','Spades', ACEVALUE))
                         case 11:
                             self.cards.append(card.card('J♠', 'Spades', 10))
                         case 12:
@@ -67,6 +68,7 @@ class deck:
                 case _:
                     print("ERROR: deck.py match/case statement.")
                 #♥/♦/♣/♠ alt 3/4/5/6
+    
     # Calling a print to deck will print all values of the "cards" list
     def __str__(self):
         deck = self.cards[0].name
@@ -79,6 +81,13 @@ class deck:
         random.shuffle(self.cards)
 
     def blackjackFirstDeal(self):
+        if(self.size < 4):
+            newDeck = deck(1)
+            newDeck.shuffle()
+            self.cards = newDeck.cards + self.cards
+            self.size = newDeck.size + self.size
+            pass
+
         dealerHand = []
         playerHand = []
         dealerHand.append(self.cards.pop())
@@ -87,6 +96,10 @@ class deck:
         playerHand.append(self.cards.pop())
 
         return dealerHand, playerHand
+    
+    # Returns the next card in the deck
+    def hit(self):
+        return self.cards.pop()
         
 
 def test():

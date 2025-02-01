@@ -1,18 +1,18 @@
 '''
 This is the class definition for a black jack player.
 '''
-
 import hand
 
 class player:
     def __init__(self, name):
         self.name = name
-        self.__dict__['hand'] = hand.hand()
+        self.__dict__['playerHand'] = hand.hand()
 
+    # Defines the behavior when setting class attributes
     def __setattr__(self, name, value):
-        if(name == 'hand'):
+        if(name == 'playerHand'):
             if(type(value) is list):
-                self.hand.setHand(value)
+                self.playerHand.setHand(value)
             else:
                 print('Must assign using a list')
         elif(name == 'name'):
@@ -20,14 +20,28 @@ class player:
         else:
             print('You cannot set this attribute')
 
+    # Returns the cards of the players hand as a comma seperated string
     def handContent(self):
         contents = ''
-        for j in self.hand:
+        for j in self.playerHand.cards:
             contents += j.name + ', '
         return contents[:-2]
     
+    # Returns the first card of the players hand as a string
     def dealerContent(self):
-        return self.hand[0].name
+        return self.playerHand.cards[0].name
+    
+    # Returns the total value of the player's hand
+    def handValue(self):
+        return self.playerHand.getHandValue()
+    
+    # Adds a new card to the player's hand
+    def hit(self, newCard):
+        self.playerHand.hit(newCard)
+
+    # Empties the player's hand of cards and resets the value
+    def clearHand(self):
+        self.playerHand.fold()
     
 if __name__ == "__main__":
     pass

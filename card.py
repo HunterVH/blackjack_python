@@ -8,5 +8,6 @@ class card:
         self.suit = suit
         self.value = value
 
+    # Returns the name of the card as a string with a letter/number and suit
     def __str__(self):
         return self.name
