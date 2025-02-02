@@ -81,6 +81,7 @@ class deck:
         random.shuffle(self.cards)
 
     def blackjackFirstDeal(self):
+        # Add a new shuffled deck if the deck runs out of cards
         if(self.size < 4):
             newDeck = deck(1)
             newDeck.shuffle()
@@ -99,6 +100,13 @@ class deck:
     
     # Returns the next card in the deck
     def hit(self):
+        # Add a new shuffled deck if the deck runs out of cards
+        if(self.size < 1):
+            newDeck = deck(1)
+            newDeck.shuffle()
+            self.cards = newDeck.cards + self.cards
+            self.size = newDeck.size + self.size
+            pass
         return self.cards.pop()
         
 
