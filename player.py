@@ -7,6 +7,7 @@ class player:
     def __init__(self, name):
         self.name = name
         self.__dict__['playerHand'] = hand.hand()
+        self.busted = False
 
     # Defines the behavior when setting class attributes
     def __setattr__(self, name, value):
@@ -16,6 +17,8 @@ class player:
             else:
                 print('Must assign using a list')
         elif(name == 'name'):
+            self.__dict__[name] = value
+        elif(name == 'busted'):
             self.__dict__[name] = value
         else:
             print('You cannot set this attribute')
@@ -38,10 +41,15 @@ class player:
     # Adds a new card to the player's hand
     def hit(self, newCard):
         self.playerHand.hit(newCard)
+        if self.playerHand.totalValue > 21:
+            self.busted = True
 
     # Empties the player's hand of cards and resets the value
     def clearHand(self):
         self.playerHand.fold()
+
+    def checkBust(self):
+        return self.busted
     
 if __name__ == "__main__":
     pass
