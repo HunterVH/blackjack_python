@@ -10,8 +10,8 @@ class deck:
     def __init__(self, size):
         ACEVALUE = 11
         self.cards = []
-        self.size = size
-        for j in range(52*self.size):
+        self.size = size*52
+        for j in range(self.size):
             suit = j//(13*self.size)
             value = j%13+1
             match suit:
@@ -72,7 +72,7 @@ class deck:
     # Calling a print to deck will print all values of the "cards" list
     def __str__(self):
         deck = self.cards[0].name
-        for j in range(1,(52*self.size)):
+        for j in range(1,(self.size)):
             deck = deck+', '+(self.cards[j].name)
         return deck
     
@@ -96,6 +96,8 @@ class deck:
         dealerHand.append(self.cards.pop())
         playerHand.append(self.cards.pop())
 
+        self.size -= 4
+
         return dealerHand, playerHand
     
     # Returns the next card in the deck
@@ -106,7 +108,9 @@ class deck:
             newDeck.shuffle()
             self.cards = newDeck.cards + self.cards
             self.size = newDeck.size + self.size
-            pass
+            
+        self.size -= 1
+        
         return self.cards.pop()
         
 
