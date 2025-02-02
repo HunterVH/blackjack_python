@@ -5,39 +5,28 @@ This Program will simulate a game of blackjack
 import deck
 import player
 
-def main():
-    def printHandContent():
+def printHandContent(player1, dealer):
         print(f'{player1.name}: {player1.handContent()}\n\tTotal: {player1.handValue()}\n')
         print(f'{dealer.name}: {dealer.dealerContent()}, *')
 
-    def checkBust():
-        pass
-
-    shoe = deck.deck(1)
-    shoe.shuffle()
-    print(shoe)
-    player1 = player.player('Hunter')
-    dealer = player.player('Dealer')
+def playerPlays(player1, dealer, shoe):
     playing = True
-
-    
 
     while(playing):
         
         dealer.playerHand, player1.playerHand = shoe.blackjackFirstDeal()
 
-        printHandContent()
+        printHandContent(player1, dealer)
 
         userIn = ''
-        while(userIn[:1] != 'S' and userIn[:1] != 'Q'):
+        while(userIn[:1] != 'S' and userIn[:1] != 'Q' and not player1.checkBust()):
             userIn = (input("(H)it, (S)tay, or (Q)uit: ")).upper()
             if(userIn[:1] == 'H'):
                 print('Hit!')
                 player1.hit(shoe.hit())
                 printHandContent()
-                if(checkBust()):
-                    # check to see if the player busted
-                    pass
+                if(player1.checkBust()):
+                    print('You Busted!')
             elif(userIn[:1] == 'S'):
                 print('Stay!')
             elif(userIn[:1] == 'Q'):
@@ -55,6 +44,20 @@ def main():
                 dealer.clearHand()
             else:
                 print('That was not a valid input')
+
+def main():
+    # Create the shoe
+    shoe = deck.deck(1)
+    shoe.shuffle()
+    # Create the players
+    player1 = player.player('Hunter')
+    dealer = player.player('Dealer')
+
+    playerPlays(player1, dealer, shoe)
+
+    
+
+
 
 
 if __name__ == "__main__":
