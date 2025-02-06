@@ -9,30 +9,68 @@ def printHandContentPlayerView(player1, dealer):
     print(f'{player1.name}: {player1.handContent()}\n\tTotal: {player1.handValue()}\n')
     print(f'{dealer.name}: {dealer.dealerContent()}, *')
 
-def printHandContentDealer(dealer):
+def printHandContent(dealer):
     print(f'{dealer.name}: {dealer.handContent()}\n\tTotal: {dealer.handValue()}\n')
+
+def displayWinner(player1, dealer):
+    def playerWin():
+        print(f'{player1.name} Wins!')
+
+    def dealerWin():
+        print('The Dealer Wins!')
+
+    def push():
+        print('No One Wins!')
+
+    if(player1.checkBust()):
+        if(dealer.checkBust()):
+            push()
+        else:
+            dealerWin()
+    elif(dealer.checkBust()):
+        playerWin()
+    else:
+        playerValue = player1.handValue()
+        dealerValue = dealer.handValue()
+
+        # Sets the hand value to the highest value in case of an Ace in hand
+        if(type(playerValue) is list):
+            playerValue = playerValue[1]
+        if(type(dealerValue) is list):
+            dealerValue = dealerValue[1]
+
+        if(playerValue < dealerValue):
+            dealerWin()
+        elif(dealerValue < playerValue):
+            playerWin()
+        else:
+            push()
 
 def dealerPlays(dealer, shoe):
     SOFTHIT = 17
     value = dealer.handValue()
-    # This will happen if the dealer has an ace
+
+    printHandContent(dealer)
+    
     while(True):
+        # This will happen if the dealer has an ace
         if(type(value) is list):
-            if(value[1] <= 17):
+            if(value[1] <= SOFTHIT):
+                print('Dealer Hits!')
                 dealer.hit(shoe.hit())
                 value = dealer.handValue()
-                # # Check if value is still a list to avoid a type error
-                # if(value is not list):
-                #     break
             else:
+                print('Dealer Stays!')
                 break
         else:
-            if value <= 16:
+            if value <= (SOFTHIT-1):
+                print('Dealer Hits!')
                 dealer.hit(shoe.hit())
                 value = dealer.handValue()
             else:
+                print('Dealer Stays!')
                 break
-    printHandContentDealer(dealer)
+    printHandContent(dealer)
     
 
 def playerPlays(player1, dealer, shoe):
@@ -62,6 +100,7 @@ def playerPlays(player1, dealer, shoe):
                 print('That was not a valid input.')
 
         dealerPlays(dealer, shoe)
+        displayWinner(player1, dealer)
 
         while(userIn[:1] != 'D' and userIn[:1] != 'Q'):
             userIn = input('(D)eal or (Q)uit: ').upper()
