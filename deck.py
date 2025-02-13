@@ -5,8 +5,13 @@ The definition of the deck class.
 import card
 import random
 
+'''
+This class can be used to create a deck object that can hold cards
+'''
 class deck:
-    # This is the initial creation of the deck 52 objects of the card class
+    '''
+    This is the initial creation of the deck
+    '''
     def __init__(self, size):
         ACEVALUE = 11
         self.cards = []
@@ -69,17 +74,25 @@ class deck:
                     print("ERROR: deck.py match/case statement.")
                 #♥/♦/♣/♠ alt 3/4/5/6
     
-    # Calling a print to deck will print all values of the "cards" list
+    '''
+    Prints all cards that are inside the deck
+    '''
     def __str__(self):
         deck = self.cards[0].name
         for j in range(1,(self.size)):
             deck = deck+', '+(self.cards[j].name)
         return deck
     
-    # This uses the random library to shuffle the "cards" list
+    '''
+    Randomly shuffles the deck
+    '''
     def shuffle(self):
         random.shuffle(self.cards)
 
+    '''
+    Simulates an intial blackjack deal, two cards to the player, two cards to 
+    the dealer
+    '''
     def blackjackFirstDeal(self):
         # Add a new shuffled deck if the deck runs out of cards
         if(self.size < 4):
@@ -100,7 +113,9 @@ class deck:
 
         return dealerHand, playerHand
     
-    # Returns the next card in the deck
+    '''
+    Returns the next card in the deck
+    '''
     def hit(self):
         # Add a new shuffled deck if the deck runs out of cards
         if(self.size < 1):
@@ -112,7 +127,6 @@ class deck:
         self.size -= 1
         
         return self.cards.pop()
-        
 
 def test():
     deck1 = deck(5)
@@ -123,5 +137,4 @@ def test():
     pass
 
 if __name__ == "__main__":
-    print('Entered')
     test()
