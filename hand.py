@@ -8,7 +8,9 @@ class hand:
         self.totalValue = 0
         self.numberOfAces = 0
 
-    # This function dictates what happens when setting the attributes of the class
+    '''
+    This function dictates what happens when setting the attributes of the class
+    '''
     def __setattr__(self, name, value):
         if(name == 'cards'):
             self.__dict__[name] = value
@@ -23,17 +25,23 @@ class hand:
         else:
             print(f'{name} is not a valid attribute')
     
-    # This function resets the hand to have nothing
+    '''
+    This function resets the hand to have no cards
+    '''
     def fold(self):
         self.cards.clear()
         self.totalValue = 0
         self.numberOfAces = 0
 
-    # This function sets the hand given a list of cards
+    '''
+    Sets the hand equal to the given dealt card(s)
+    '''
     def setHand(self, dealtCards):
         self.cards = dealtCards
 
-    # This function returns the value of the hand, and calculates Aces as 1 or 11
+    '''
+    This function returns the value of the hand, and calculates Aces as 1 or 11
+    '''
     def getHandValue(self):
         if self.numberOfAces > 0:
             if (self.totalValue-((self.numberOfAces-1)*10)) <= 21:
@@ -43,7 +51,9 @@ class hand:
         else:
             return self.totalValue
 
-    # This function adds a card to the hand
+    '''
+    This function adds a given card to the hand
+    '''
     def hit(self, newCard):
         self.cards.append(newCard)
         self.totalValue += newCard.value
