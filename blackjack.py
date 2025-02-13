@@ -5,13 +5,23 @@ This Program will simulate a game of blackjack
 import deck
 import player
 
+'''
+The function prints the contents of a players hand and shows the first card of a
+dealers hand
+'''
 def printHandContentPlayerView(player1, dealer):
     print(f'{player1.name}: {player1.handContent()}\n\tTotal: {player1.handValue()}\n')
     print(f'{dealer.name}: {dealer.dealerContent()}, *')
 
-def printHandContent(dealer):
-    print(f'{dealer.name}: {dealer.handContent()}\n\tTotal: {dealer.handValue()}\n')
+'''
+Prints the full contents of a given player's hand
+'''
+def printHandContent(player):
+    print(f'{player.name}: {player.handContent()}\n\tTotal: {player.handValue()}\n')
 
+'''
+Print the winner of the game to the player
+'''
 def displayWinner(player1, dealer):
     def playerWin():
         print(f'{player1.name} Wins!')
@@ -46,6 +56,9 @@ def displayWinner(player1, dealer):
         else:
             push()
 
+'''
+The functionality for the dealer's turn
+'''
 def dealerPlays(dealer, shoe):
     SOFTHIT = 17
     value = dealer.handValue()
@@ -72,16 +85,18 @@ def dealerPlays(dealer, shoe):
                 break
     printHandContent(dealer)
     
-
+'''
+The functionality for a player taking their turn
+'''
 def playerPlays(player1, dealer, shoe):
     playing = True
 
     while(playing):
         
         dealer.playerHand, player1.playerHand = shoe.blackjackFirstDeal()
-
         printHandContentPlayerView(player1, dealer)
 
+        # Functionality for hitting and staying
         userIn = ''
         while(userIn[:1] != 'S' and userIn[:1] != 'Q' and not player1.checkBust()):
             userIn = (input("(H)it, (S)tay, or (Q)uit: ")).upper()
@@ -102,6 +117,7 @@ def playerPlays(player1, dealer, shoe):
         dealerPlays(dealer, shoe)
         displayWinner(player1, dealer)
 
+        # Allows the user to play again or quit
         while(userIn[:1] != 'D' and userIn[:1] != 'Q'):
             userIn = input('(D)eal or (Q)uit: ').upper()
             if(userIn[:1] == 'Q'):
@@ -112,6 +128,9 @@ def playerPlays(player1, dealer, shoe):
             else:
                 print('That was not a valid input')
 
+'''
+This function creates the deck, shuffles it and begins the game
+'''
 def main():
     # Create the shoe
     shoe = deck.deck(1)
