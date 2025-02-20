@@ -17,7 +17,7 @@ class deck:
         self.cards = []
         self.size = size*52
         for j in range(self.size):
-            suit = j//(13*self.size)
+            suit = j//(13*size)
             value = j%13+1
             match suit:
                 case 0:
