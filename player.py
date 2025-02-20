@@ -51,7 +51,11 @@ class player:
     '''
     def hit(self, newCard):
         self.playerHand.hit(newCard)
-        if self.playerHand.totalValue > 21:
+        value = self.playerHand.getHandValue()
+        if type(value) == list:
+            if value[0] > 21:
+                self.busted = True
+        elif value > 21:
             self.busted = True
 
     '''
