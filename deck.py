@@ -24,7 +24,6 @@ class deck:
                     match value:
                         case 1:
                             self.cards.append(card.card('A♥','Hearts', ACEVALUE))
-                            pass
                         case 11:
                             self.cards.append(card.card('J♥', 'Hearts', 10))
                         case 12:
@@ -33,7 +32,6 @@ class deck:
                             self.cards.append(card.card('K♥', 'Hearts', 10))
                         case _:
                             self.cards.append(card.card(str(value)+'♥', 'Hearts', value))
-                            pass
                 case 1:
                     match value:
                         case 1:
