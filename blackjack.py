@@ -7,6 +7,12 @@ import player
 import time
 import os
 
+'''
+player1 - player object representing the user
+dealer - player object representing the computer
+seeDealer - Boolean that determines if the dealers cards are to be displayed
+Prints the contents of the player's and dealer's (conditionally) hand to the screen
+'''
 def printHandValues(player1, dealer, seeDealer=False):
     if(seeDealer):
         playerHandContent = f'{player1.name}: {player1.handContent()}\n\tTotal: {'BUSTED' if player1.checkBust() else player1.handValue()}'
@@ -19,12 +25,21 @@ def printHandValues(player1, dealer, seeDealer=False):
     
     print(f'{playerHandContent}\n\n{dealerHandContent}')
 
+'''
+player1 - player object representing the user
+dealer - player object representing the computer
+waittime - number that represents how long to wait before clearing the screen and displaying the player/dealer hands
+seeDealer - Boolean that determines if the dealers cards are to be displayed
+Forces a wait in the program for the player to view the cards/decisions before updating the terminal output
+'''
 def refresh(player1, dealer, waittime, seeDealer=False):
     time.sleep(waittime)
     os.system('cls')
     printHandValues(player1, dealer, seeDealer)
 
 '''
+player1 - player object representing the user
+dealer - player object representing the computer
 Print the winner of the game to the player
 '''
 def displayWinner(player1, dealer):
@@ -64,6 +79,9 @@ def displayWinner(player1, dealer):
             push()
 
 '''
+player1 - player object representing the user
+dealer - player object representing the computer
+shoe - represents the deck that cards are being drawn from
 The functionality for the dealer's turn
 '''
 def dealerPlays(player1, dealer, shoe):
@@ -93,6 +111,9 @@ def dealerPlays(player1, dealer, shoe):
     
     
 '''
+player1 - player object representing the user
+dealer - player object representing the computer
+shoe - represents the deck that cards are being drawn from
 The functionality for a player taking their turn
 '''
 def playerPlays(player1, dealer, shoe):
@@ -140,7 +161,7 @@ def playerPlays(player1, dealer, shoe):
 '''
 This function creates the deck, shuffles it and begins the game
 '''
-def main():
+def playBlackjack():
     # Create the shoe
     shoe = deck.deck(1)
     shoe.shuffle()
@@ -151,4 +172,4 @@ def main():
     playerPlays(player1, dealer, shoe)
 
 if __name__ == "__main__":
-    main()
+    playBlackjack()
