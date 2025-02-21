@@ -10,6 +10,7 @@ This class can be used to create a deck object that can hold cards
 '''
 class deck:
     '''
+    size - int that dictates how many normal size decks (52 cards) to put into the deck object
     This is the initial creation of the deck
     '''
     def __init__(self, size):
