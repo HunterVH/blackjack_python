@@ -4,25 +4,32 @@ This Program will simulate a game of blackjack
 
 import deck
 import player
+import time
+import os
 
-'''
-The function prints the contents of a players hand and shows the first card of a
-dealers hand
-'''
-def printHandContentPlayerView(player1, dealer):
-    print(f'{player1.name}: {player1.handContent()}\n\tTotal: {player1.handValue()}\n')
-    print(f'{dealer.name}: {dealer.dealerContent()}, *')
+def printHandValues(player1, dealer, seeDealer=False):
+    if(seeDealer):
+        playerHandContent = f'{player1.name}: {player1.handContent()}\n\tTotal: {'BUSTED' if player1.checkBust() else player1.handValue()}'
 
-'''
-Prints the full contents of a given player's hand
-'''
-def printHandContent(player):
-    print(f'{player.name}: {player.handContent()}\n\tTotal: {player.handValue()}\n')
+        dealerHandContent = f'{dealer.name}: {dealer.handContent()}\n\tTotal: {'BUSTED' if dealer.checkBust() else dealer.handValue()}'
+    else:
+        playerHandContent = f'{player1.name}: {player1.handContent()}\n\tTotal: {'BUSTED' if player1.checkBust() else player1.handValue()}'
+
+        dealerHandContent = f'{dealer.name}: {dealer.dealerContent()}, *\n'
+    
+    print(f'{playerHandContent}\n\n{dealerHandContent}')
+
+def refresh(player1, dealer, waittime, seeDealer=False):
+    time.sleep(waittime)
+    os.system('cls')
+    printHandValues(player1, dealer, seeDealer)
 
 '''
 Print the winner of the game to the player
 '''
 def displayWinner(player1, dealer):
+    # refresh(player1, dealer, 2, True)
+    print()
     def playerWin():
         print(f'{player1.name} Wins!')
 
@@ -59,13 +66,13 @@ def displayWinner(player1, dealer):
 '''
 The functionality for the dealer's turn
 '''
-def dealerPlays(dealer, shoe):
+def dealerPlays(player1, dealer, shoe):
     SOFTHIT = 17
     value = dealer.handValue()
-
-    printHandContent(dealer)
     
-    while(True):
+    while(not dealer.checkBust()):
+        refresh(player1, dealer, 1, True)
+        time.sleep(1)
         # This will happen if the dealer has an ace
         if(type(value) is list):
             if(value[1] <= SOFTHIT):
@@ -83,7 +90,7 @@ def dealerPlays(dealer, shoe):
             else:
                 print('Dealer Stays!')
                 break
-    printHandContent(dealer)
+    
     
 '''
 The functionality for a player taking their turn
@@ -94,17 +101,17 @@ def playerPlays(player1, dealer, shoe):
     while(playing):
         
         dealer.playerHand, player1.playerHand = shoe.blackjackFirstDeal()
-        printHandContentPlayerView(player1, dealer)
 
         # Functionality for hitting and staying
         userIn = ''
         while(userIn[:1] != 'S' and userIn[:1] != 'Q' and not player1.checkBust()):
-            userIn = (input("(H)it, (S)tay, or (Q)uit: ")).upper()
+            refresh(player1, dealer, 1)
+            userIn = (input("\n(H)it, (S)tay, or (Q)uit: ")).upper()
             if(userIn[:1] == 'H'):
                 print('Hit!')
                 player1.hit(shoe.hit())
-                printHandContentPlayerView(player1, dealer)
                 if(player1.checkBust()):
+                    refresh(player1, dealer, 1)
                     print('You Busted!')
             elif(userIn[:1] == 'S'):
                 print('Stay!')
@@ -114,8 +121,10 @@ def playerPlays(player1, dealer, shoe):
             else:
                 print('That was not a valid input.')
 
-        dealerPlays(dealer, shoe)
-        displayWinner(player1, dealer)
+        if(userIn[:1] != 'Q'):
+            refresh(player1, dealer, 0, True)
+            dealerPlays(player1, dealer, shoe)
+            displayWinner(player1, dealer)
 
         # Allows the user to play again or quit
         while(userIn[:1] != 'D' and userIn[:1] != 'Q'):
