@@ -7,6 +7,8 @@ An object to represent playing cards
 '''
 class card:
     '''
+    name - string - The name that represents the card
+    suit - string - the suit of the card
     Creates the card object
     '''
     def __init__(self, name, suit, value):
