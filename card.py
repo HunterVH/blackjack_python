@@ -3,7 +3,7 @@ This is a class definition for the card class.
 '''
 
 '''
-An object to represent playing cards
+A class to represent playing cards
 '''
 class card:
     '''

@@ -2,6 +2,9 @@
 This is the definition for the hand class
 '''
 
+'''
+This class represents the hand that a player has.
+'''
 class hand:
     def __init__(self):
         self.cards = []

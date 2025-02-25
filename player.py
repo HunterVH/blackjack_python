@@ -3,6 +3,9 @@ This is the class definition for a black jack player.
 '''
 import hand
 
+'''
+This class represents a player.
+'''
 class player:
     def __init__(self, name):
         self.name = name
