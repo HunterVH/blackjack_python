@@ -35,7 +35,7 @@ Forces a wait in the program for the player to view the cards/decisions before u
 '''
 def refresh(player1, dealer, waittime, seeDealer=False):
     time.sleep(waittime)
-    os.system('cls')
+    os.system(clearCom)
     printHandValues(player1, dealer, seeDealer)
 
 '''
@@ -110,7 +110,6 @@ def dealerPlays(player1, dealer, shoe):
                 print('Dealer Stays!')
                 break
     
-    
 '''
 player1 - player object representing the user
 dealer - player object representing the computer
@@ -173,4 +172,9 @@ def playBlackjack():
     playerPlays(player1, dealer, shoe)
 
 if __name__ == "__main__":
+    # Define the clear command depending on OS
+    if os.name == 'nt':
+        clearCom = 'cls'
+    else:
+        clearCom = 'clear'
     playBlackjack()
