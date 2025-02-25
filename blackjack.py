@@ -143,8 +143,8 @@ def playerPlays(player1, dealer, shoe):
                 print('That was not a valid input.')
 
         if(userIn[:1] != 'Q'):
-            refresh(player1, dealer, 0, True)
             dealerPlays(player1, dealer, shoe)
+            refresh(player1, dealer, 1, True)
             displayWinner(player1, dealer)
 
         # Allows the user to play again or quit
