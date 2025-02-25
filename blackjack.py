@@ -1,4 +1,5 @@
 """
+Author: Hunter Van Horn
 This Program will simulate a game of blackjack
 """
 
