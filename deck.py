@@ -13,12 +13,13 @@ class deck:
     size - int that dictates how many normal size decks (52 cards) to put into the deck object
     This is the initial creation of the deck
     '''
-    def __init__(self, size):
+    def __init__(self, numOfDecks):
         ACEVALUE = 11
         self.cards = []
-        self.size = size*52
+        self.initNumOfDecks = numOfDecks
+        self.size = numOfDecks*52
         for j in range(self.size):
-            suit = j//(13*size)
+            suit = j//(13*numOfDecks)
             value = j%13+1
             match suit:
                 case 0:
@@ -95,7 +96,7 @@ class deck:
     def blackjackFirstDeal(self):
         # Add a new shuffled deck if the deck runs out of cards
         if(self.size < 4):
-            newDeck = deck(1)
+            newDeck = deck(self.initNumOfDecks)
             newDeck.shuffle()
             self.cards = newDeck.cards + self.cards
             self.size = newDeck.size + self.size
@@ -118,7 +119,7 @@ class deck:
     def hit(self):
         # Add a new shuffled deck if the deck runs out of cards
         if(self.size < 1):
-            newDeck = deck(1)
+            newDeck = deck(self.initNumOfDecks)
             newDeck.shuffle()
             self.cards = newDeck.cards + self.cards
             self.size = newDeck.size + self.size
